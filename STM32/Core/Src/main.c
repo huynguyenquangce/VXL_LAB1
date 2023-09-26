@@ -47,6 +47,7 @@
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
+static void MX_GPIO_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -60,6 +61,70 @@ void SystemClock_Config(void);
   * @brief  The application entry point.
   * @retval int
   */
+void display7SEG(int num)
+{
+if(num==0)
+{
+	HAL_GPIO_TogglePin ( LED_G_GPIO_Port , LED_G_Pin ) ;
+	HAL_GPIO_TogglePin ( LED_E_GPIO_Port , LED_E_Pin ) ;
+}
+else if(num==1)
+{
+	HAL_GPIO_TogglePin ( LED_A_GPIO_Port , LED_A_Pin ) ;
+	HAL_GPIO_TogglePin ( LED_F_GPIO_Port , LED_F_Pin ) ;
+	HAL_GPIO_TogglePin ( LED_E_GPIO_Port , LED_E_Pin ) ;
+	HAL_GPIO_TogglePin ( LED_D_GPIO_Port , LED_D_Pin ) ;
+}
+else if(num==2)
+{
+	HAL_GPIO_TogglePin ( LED_A_GPIO_Port , LED_A_Pin ) ;
+	HAL_GPIO_TogglePin ( LED_G_GPIO_Port , LED_G_Pin ) ;
+	HAL_GPIO_TogglePin ( LED_E_GPIO_Port , LED_E_Pin ) ;
+	HAL_GPIO_TogglePin ( LED_C_GPIO_Port , LED_C_Pin ) ;
+	HAL_GPIO_TogglePin ( LED_D_GPIO_Port , LED_D_Pin ) ;
+}
+else if(num==3)
+{
+	HAL_GPIO_TogglePin ( LED_C_GPIO_Port , LED_C_Pin ) ;
+	HAL_GPIO_TogglePin ( LED_E_GPIO_Port , LED_E_Pin ) ;
+}
+else if(num==4)
+{
+	HAL_GPIO_TogglePin ( LED_A_GPIO_Port , LED_A_Pin ) ;
+	HAL_GPIO_TogglePin ( LED_F_GPIO_Port , LED_F_Pin ) ;
+	HAL_GPIO_TogglePin ( LED_D_GPIO_Port , LED_D_Pin ) ;
+}
+else if(num==5)
+{
+	HAL_GPIO_TogglePin ( LED_B_GPIO_Port , LED_B_Pin ) ;
+	HAL_GPIO_TogglePin ( LED_A_GPIO_Port , LED_A_Pin ) ;
+	HAL_GPIO_TogglePin ( LED_D_GPIO_Port , LED_D_Pin ) ;
+}
+else if(num==6)
+{
+	HAL_GPIO_TogglePin ( LED_E_GPIO_Port , LED_E_Pin ) ;
+}
+else if(num==7)
+{
+	HAL_GPIO_TogglePin ( LED_F_GPIO_Port , LED_F_Pin ) ;
+	HAL_GPIO_TogglePin ( LED_B_GPIO_Port , LED_B_Pin ) ;
+	HAL_GPIO_TogglePin ( LED_G_GPIO_Port , LED_G_Pin ) ;
+	HAL_GPIO_TogglePin ( LED_E_GPIO_Port , LED_E_Pin ) ;
+	HAL_GPIO_TogglePin ( LED_D_GPIO_Port , LED_D_Pin ) ;
+}
+else if(num==8)
+{
+	HAL_GPIO_TogglePin ( LED_G_GPIO_Port , LED_G_Pin ) ;
+	HAL_GPIO_TogglePin ( LED_F_GPIO_Port , LED_F_Pin ) ;
+	HAL_GPIO_TogglePin ( LED_E_GPIO_Port , LED_E_Pin ) ;
+	HAL_GPIO_TogglePin ( LED_D_GPIO_Port , LED_D_Pin ) ;
+}
+else if(num==9)
+{
+	HAL_GPIO_TogglePin ( LED_E_GPIO_Port , LED_E_Pin ) ;
+	num=0;
+}
+}
 int main(void)
 {
   /* USER CODE BEGIN 1 */
@@ -83,18 +148,35 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
+  MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
+  int counter=1;
+   int initial=0;
+   while (1)
+   {
+ if(counter>=10)
+ {
+ 	counter=0;
+ }
+ if(initial==0)
+ {
+ 	HAL_GPIO_TogglePin ( LED_G_GPIO_Port , LED_G_Pin ) ;
+ 	initial++;
+ }
+ else
+ {
+ display7SEG(counter++);
+ }
+ HAL_Delay(1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-  }
+   }
   /* USER CODE END 3 */
 }
 
@@ -131,6 +213,33 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+}
+
+/**
+  * @brief GPIO Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_GPIO_Init(void)
+{
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+  /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOB_CLK_ENABLE();
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOB, LED_A_Pin|LED_B_Pin|LED_C_Pin|LED_D_Pin
+                          |LED_E_Pin|LED_F_Pin|LED_G_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : LED_A_Pin LED_B_Pin LED_C_Pin LED_D_Pin
+                           LED_E_Pin LED_F_Pin LED_G_Pin */
+  GPIO_InitStruct.Pin = LED_A_Pin|LED_B_Pin|LED_C_Pin|LED_D_Pin
+                          |LED_E_Pin|LED_F_Pin|LED_G_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
 }
 
 /* USER CODE BEGIN 4 */
