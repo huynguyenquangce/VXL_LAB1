@@ -91,6 +91,21 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  void clearAllClock()
+  {
+	  HAL_GPIO_WritePin(LED_0_GPIO_Port, LED_0_Pin, SET);
+	  HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, SET);
+	  HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, SET);
+	  HAL_GPIO_WritePin(LED_3_GPIO_Port, LED_3_Pin, SET);
+	  HAL_GPIO_WritePin(LED_4_GPIO_Port, LED_4_Pin, SET);
+	  HAL_GPIO_WritePin(LED_5_GPIO_Port, LED_5_Pin, SET);
+	  HAL_GPIO_WritePin(LED_6_GPIO_Port, LED_6_Pin, SET);
+	  HAL_GPIO_WritePin(LED_7_GPIO_Port, LED_7_Pin, SET);
+	  HAL_GPIO_WritePin(LED_8_GPIO_Port, LED_8_Pin, SET);
+	  HAL_GPIO_WritePin(LED_9_GPIO_Port, LED_9_Pin, SET);
+	  HAL_GPIO_WritePin(LED_10_GPIO_Port, LED_10_Pin, SET);
+	  HAL_GPIO_WritePin(LED_11_GPIO_Port, LED_11_Pin, SET);
+  }
   void displayClock(int num)
   {
 	  if(num==0)
@@ -286,6 +301,7 @@ int count=0;
 			  count=0;
 		  }
 	  displayClock(count++);
+	  clearAllClock();
     /* USER CODE END WHILE */
 	  HAL_Delay(1000);
     /* USER CODE BEGIN 3 */
