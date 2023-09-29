@@ -106,7 +106,7 @@ int main(void)
 	  HAL_GPIO_WritePin(LED_10_GPIO_Port, LED_10_Pin, SET);
 	  HAL_GPIO_WritePin(LED_11_GPIO_Port, LED_11_Pin, SET);
   }
-  void displayClock(int num)
+  void setNumberOnClock(int num)
   {
 	  if(num==0)
 	  {
@@ -300,8 +300,8 @@ int count=0;
 		  {
 			  count=0;
 		  }
-	  displayClock(count++);
-	  clearAllClock();
+	  setNumberOnClock(count++);
+//	  clearAllClock();
     /* USER CODE END WHILE */
 	  HAL_Delay(1000);
     /* USER CODE BEGIN 3 */
